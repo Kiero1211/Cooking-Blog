@@ -1,0 +1,42 @@
+<% if (recipe) {%>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="/#<%- recipe.category %>">Home</a></li>
+		<li class="breadcrumb-item active" aria-current="page"><%- recipe.name %></li>
+	</ol>
+</nav>
+<div class="row">
+	<div class="col col-12 col-lg-4">
+		<img
+			src="/uploads/<%- recipe.image %>"
+			class="img-fluid sticky-top"
+			style="top: 20px"
+			alt="<%- recipe.name %>"
+			loading="lazy" />
+	</div>
+
+	<div class="col col-12 col-lg-8">
+		<div class="row">
+			<div class="col-12"><h1><%- recipe.name %></h1></div>
+			<div class="col-12 mb-4 d-flex align-items-center gap-1">
+				<i class="fa-solid fa-tag"></i> <%- recipe.category %>
+			</div>
+			<div class="col-12">
+				<h4>Cooking Instruction</h4>
+				<%- recipe.description %>
+			</div>
+		</div>
+
+		<div class="row pt-4">
+			<div class="col-12">
+				<h4>Ingredients</h4>
+				<ul class="list-group list-group-flush">
+					<% recipe.ingredients.forEach((ingredient) => {%>
+					<li class="list-group-item"><%- ingredient %></li>
+					<%})%>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
