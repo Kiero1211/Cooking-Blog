@@ -1,0 +1,66 @@
+<div class="px-4 py-5 my-5 text-center">
+	<h1 class="display-5 fw-bold">Submit your recipe</h1>
+	<div class="col-lg-6 mx-auto">
+		<p class="lead">
+			Share your amazing recipe with thousands of web developers accross the world. Fill our form to get started.
+		</p>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form action="/submit-recipe" enctype="multipart/form-data" method="POST">
+
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" name="email" id="email">
+                </div>
+
+                <div class="col-12">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" name="name" id="name">
+                </div>
+
+                <div class="col-12">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="4"></textarea>
+                </div>
+
+                <div class="col-12">
+                    <label for="name" class="form-label d-block">Ingredients:</label>
+                    <small>Example: Chicken</small>
+                    <div class="ingredientList">
+                        <div class="ingredientWidget mb-1">
+                            <input type="text" class="form-control" name="ingredients">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-primary" id="addingIngredientBtn">+ Ingredient</button>
+                </div>
+
+                <div class="col-12">
+                    <label for="categoy" class="form-label">Category:</label>
+                    <select name="category" id="category" class="form-control">
+                        <option value="" selected>--Select a category--</option>
+                        <option value="Thai">Thai</option>
+                        <option value="American">American</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="Indian">Indian</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label for="image">Product Image</label>
+                    <input type="file" class="form-control" name="image" accept="image/*">
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn  btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

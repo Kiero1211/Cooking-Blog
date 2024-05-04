@@ -143,3 +143,18 @@ exports.exploreRandom = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 }
+
+/*
+    POST /submit-recipe
+*/
+exports.submitRecipe = async (req, res) => {
+    try {
+        res.render("submit-recipe", {
+            title: "Cooking Blog - Submit Recipe"
+        })
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}
+
+

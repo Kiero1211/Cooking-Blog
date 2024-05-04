@@ -9,6 +9,7 @@ router.get("/recipe/:id", recipeController.exploreRecipe);
 router.get("/categories/:name", recipeController.exploreCategoriesById);
 router.get("/explore-latest", recipeController.exploreLatest);
 router.get("/explore-random", recipeController.exploreRandom);
+router.get("/submit-recipe", recipeController.submitRecipe);
 router.post("/search", recipeController.search);
 
 module.exports = router;
