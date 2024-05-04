@@ -2,6 +2,9 @@ require("../models/database");
 const Category = require("../models/Category");
 const Recipe = require("../models/Recipe");
 
+/*
+    App Routes
+*/
 exports.homepage = async (req, res) => {
 
     const limitNumber = 5;
@@ -34,6 +37,12 @@ exports.homepage = async (req, res) => {
     }
 }
 
+
+
+/*
+    GET /categories
+    Categories
+*/
 exports.exploreCategories = async (req, res) => {
     const categories = await Category.find();
 
@@ -47,6 +56,26 @@ exports.exploreCategories = async (req, res) => {
     }
 }
 
+exports.exploreCategoriesById = async (req, res) => {
+    const categoryName = req.params.name;
+
+    const recipeList = await Recipe.find({ category: categoryName });
+    try {
+        res.render("categories", {
+            title: "Cooking Blog - Categories",
+            recipeList,
+            categoryName
+        })
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}
+
+
+/*
+    GET /recipes
+    Recipes
+*/
 exports.exploreRecipe = async (req, res) => {
     const requestedId = req.params.id;
 
@@ -61,3 +90,56 @@ exports.exploreRecipe = async (req, res) => {
     }
 }
 
+/*
+    POST /search
+    Search
+*/
+exports.search = async (req, res) => {
+    try {
+        const term = req.body.searchTerm;
+        const resultRecipes = await Recipe.find({ $text: { $search: term, $diacriticSensitive: true } });
+        res.render("search", {
+            title: "Cooking Blog - Search",
+            resultRecipes
+        })
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}
+
+/*
+    GET /explore-latest
+    Latest Recipes
+*/
+exports.exploreLatest = async (req, res) => {
+    try {
+        const limitNumber = 20;
+        const resultRecipes = await Recipe.find().sort({_id: -1}).limit(limitNumber);
+        res.render("latest", {
+            title: "Cooking Blog - Latest Results",
+            resultRecipes
+        })
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}
+
+
+/*
+    GET /explore-random
+    Random Recipes
+*/
+exports.exploreRandom = async (req, res) => {
+    try {
+        const count = await Recipe.find().countDocuments();
+        const randomNumber = Math.floor(Math.random() * count)
+        const resultRecipe = await Recipe.findOne().skip(randomNumber);
+        console.log(resultRecipe);
+        res.render("random", {
+            title: "Cooking Blog - Random Result",
+            recipe: resultRecipe
+        })
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}

@@ -18,7 +18,7 @@
 
 		<div class="d-grid gap-2 d-md-flex justify-content-md-start">
 			<a href="/explore-latest" class="btn btn-primary btn-dark btn-lg px-4 me-md-2">Explore Latest</a>
-			<a href="/random-recipe" class="btn btn-outline-secondary btn-lg px-4 me-md-2">Show Random</a>
+			<a href="/explore-random" class="btn btn-outline-secondary btn-lg px-4 me-md-2">Show Random</a>
 		</div>
 	</div>
 </div>
@@ -47,7 +47,7 @@
 <!-- Latest start -->
 <% for (const [categoryName, dataList] of Object.entries(recipes)) { %>
 <section class="py-4" id="<%- categoryName %>">
-	<div class="d-flex text-center align-items-center">
+	<div class="d-flex text-center align-items-center mb-2">
 		<h2><%- categoryName %> Recipes</h2>
 		<a href="/<%-categoryName%>" class="ms-auto">View more</a>
 	</div>
