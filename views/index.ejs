@@ -49,7 +49,11 @@
 <section class="py-4" id="<%- categoryName %>">
 	<div class="d-flex text-center align-items-center mb-2">
 		<h2><%- categoryName %> Recipes</h2>
-		<a href="/<%-categoryName%>" class="ms-auto">View more</a>
+		<% if (categoryName === "Latest") { %>
+			<a href="/explore-latest" class="ms-auto">View more</a>
+		<% } else { %>
+			<a href="categories/<%-categoryName%>" class="ms-auto">View more</a>
+		<% } %>
 	</div>
 
 	<div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-3">

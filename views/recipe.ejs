@@ -37,6 +37,10 @@
 				</ul>
 			</div>
 		</div>
+		<form action="/delete-recipe" method="post" id="deleteForm">
+			<input type="text" name="deleteId" value="<%- recipe._id %>" hidden>
+			<button type="submit" id="deleteBtn" class="btn btn-primary btn-danger btn-lg mt-5">Delete this recipe</button>
+		</form>
 	</div>
 </div>
 <% } %>

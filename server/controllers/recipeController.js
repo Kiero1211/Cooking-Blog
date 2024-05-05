@@ -9,7 +9,7 @@ exports.homepage = async (req, res) => {
 
     const limitNumber = 5;
     const categories = await Category.find().limit(limitNumber);
-    const Latest = await Recipe.find().sort({ "-id": -1 }).limit(limitNumber);
+    const Latest = await Recipe.find().sort({ "_id": -1 }).limit(limitNumber);
     const Thai = await Recipe.find({ category: "Thai" }).limit(limitNumber);
     const American = await Recipe.find({ category: "American" }).limit(limitNumber);
     const Chinese = await Recipe.find({ category: "Chinese" }).limit(limitNumber);
@@ -144,16 +144,78 @@ exports.exploreRandom = async (req, res) => {
     }
 }
 
+
 /*
-    POST /submit-recipe
+    GET /submit-recipe
 */
 exports.submitRecipe = async (req, res) => {
     try {
+        const infoErrorObj = req.flash("infoErrors");
+        const infoSuccessObj = req.flash("infoSuccess");
         res.render("submit-recipe", {
-            title: "Cooking Blog - Submit Recipe"
+            title: "Cooking Blog - Submit Recipe",
+            infoErrorObj,
+            infoSuccessObj
         })
     } catch (err) {
         res.status(500).send({ error: err.message });
+    }
+}
+
+
+/*
+    POST /submit-recipe
+*/
+exports.submitRecipeOnPOST = async (req, res) => {
+    try {
+        let imageUploadFile;
+        let uploadPath;
+        let newImageName;
+
+        if (!req.files || req.files.length === 0) {
+            throw new Error("No files were uploaded");
+        }
+
+        imageUploadFile = req.files.image;
+        newImageName = Date.now() + imageUploadFile.name;
+        uploadPath = require("path").resolve("./") + "/public/uploads/" + newImageName;
+
+        imageUploadFile.mv(uploadPath, err => {
+            if (err) {
+                throw new Error("Failed to upload image, try a different one :>");
+            }
+        })
+        
+        const newRecipe = new Recipe({
+            name: req.body.name,
+            description: req.body.description,
+            email: req.body.email,
+            category: req.body.category,
+            ingredients: req.body.ingredients,
+            image: newImageName,
+        })
+
+        await newRecipe.save();
+
+        req.flash("infoSuccess", "Recipe has been added");
+        res.redirect("/submit-recipe");
+    } catch (err) {
+        req.flash("infoErrors", "Recipe has been added");
+        res.redirect("/submit-recipe");
+    }
+}
+
+
+/*
+    DELETE /delete-recipe
+*/
+exports.deleteRecipe = async (req, res) => {
+    try {
+        const _id = req.body.deleteId;
+        await Recipe.deleteOne({_id});
+        res.redirect("/");
+    } catch (err) {
+        res.status(500).json("Failed to delete recipe");
     }
 }
 

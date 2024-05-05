@@ -9,17 +9,27 @@
 
 <div class="row justify-content-center">
     <div class="col-8">
-        <form action="/submit-recipe" enctype="multipart/form-data" method="POST">
+        <% if (infoErrorObj != "") { %>
+            <div class="alert alert-danger" role="alert">
+               <%= infoErrorObj[0].message %>
+            </div>
+        <% } %>
 
+        <% if (infoSuccessObj != "") { %>
+            <div class="alert alert-success" role="alert">
+               <%= infoSuccessObj %>
+            </div>
+        <% } %>
+        <form action="/submit-recipe" enctype="multipart/form-data" method="POST">
             <div class="row g-3">
                 <div class="col-12">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" name="email" id="email">
+                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
 
                 <div class="col-12">
                     <label for="name" class="form-label">Name:</label>
-                    <input type="text" class="form-control" name="name" id="name">
+                    <input type="text" class="form-control" name="name" id="name" required>
                 </div>
 
                 <div class="col-12">
@@ -32,7 +42,7 @@
                     <small>Example: Chicken</small>
                     <div class="ingredientList">
                         <div class="ingredientWidget mb-1">
-                            <input type="text" class="form-control" name="ingredients">
+                            <input type="text" class="form-control" name="ingredients" required>
                         </div>
                     </div>
                 </div>
@@ -42,7 +52,7 @@
 
                 <div class="col-12">
                     <label for="categoy" class="form-label">Category:</label>
-                    <select name="category" id="category" class="form-control">
+                    <select name="category" id="category" class="form-control" required>
                         <option value="" selected>--Select a category--</option>
                         <option value="Thai">Thai</option>
                         <option value="American">American</option>
