@@ -27,8 +27,8 @@ app.use(session({
 app.use(flash());
 app.use(fileUpload());
 
-app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
+app.set("layout", "./layouts/main");
 
 const routes = require("./server/routes/recipeRoutes");
 app.use("/", routes);
